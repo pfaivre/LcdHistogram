@@ -5,32 +5,32 @@ Still in developpement...
 
 A simple LCD histogram library for Arduino inspired by [spark](https://github.com/holman/spark).
 
-This library allows you to plot a set of data as a histogram on a LCD screen.
-
-For example, to draw the data se, {1, 12, 3, 9, 10, 8, 0, 5}, it will show something like `▁█▂▆▇▅ ▄`.
+This library allows you to plot a set of data as a histogram on a LCD screen.  
+For example, to draw the data set {1, 12, 3, 9, 10, 8, 0, 5}, it will show something like `▁█▂▆▇▅ ▄`.
 
 ## Usage
 LcdHistogram is a class allowing to print a graph on the screen. The following methods are available:
 
+---
 ```
-LcdHistogram(LiquiCrystal* lcd, int posx, int posy, int length);
+LcdHistogram(LiquidCrystal* lcd, int posx, int posy, int length);
 ```
-Creates a new histogram.
-
+Creates a new histogram.  
 Parameters:
 * `lcd` - An instance of LiquidCrystal previously created
 * `posx` - Row on the screen of the first bar
 * `posy` - Line on the screen of the first bar
 * `length` - Length of the histogram in characters
 
+---
 ```
 push(float number);
 ```
-Add a number in the histogram.
-
+Add a number in the histogram.  
 Parameter:
 * `number` - A single data to add at the end
 
+---
 ```
 plot();
 ```
