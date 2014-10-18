@@ -31,7 +31,7 @@ void loop() {
     lhg.push(n);
     lhg.plot();
     
-    lcd.setCursor(screenWidth-3, 1);
-    lcd.print((int)n);
+    lcd.setCursor(screenWidth-4, 1);
+    lcd.print(n);
     delay(750);
 }

@@ -20,6 +20,7 @@ LcdHistogram::LcdHistogram(LiquidCrystal* lcd, int posx, int posy, int length) {
     _posx = posx;
     _posy = posy;
     _length = length;
+    _mode = DYNAMIC;
 
     _data = (float*)malloc(sizeof(float) * _length);
     for (int i=0 ; i<_length ; i++) {
@@ -172,6 +173,10 @@ void LcdHistogram::plot() {
         }
     }
 
+    if (_mode == ABSOLUTE) {
+        min = 0;
+    }
+
     _lcd->setCursor(_posx, _posy);
     // Second loop to print them on the screen
     for (int i=0 ; i<_length ; i++) {
@@ -183,5 +188,13 @@ void LcdHistogram::plot() {
         else
             _lcd->write(bar);
     }
+}
+
+/**
+ * Change the way the graph is being printed
+ * @see GraphMode
+ */
+void LcdHistogram::setMode(GraphMode m) {
+    _mode = m;
 }
 
