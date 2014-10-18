@@ -8,7 +8,6 @@
 #include <Arduino.h>
 #include "LcdHistogram.h"
 
-
 /**
  * Creates a new histogram to show on the screen
  * @param lcd The screen to write on
@@ -17,21 +16,24 @@
  * @param length Length of the histogram in characters
  */
 LcdHistogram::LcdHistogram(LiquidCrystal* lcd, int posx, int posy, int length) {
-      _lcd = lcd;
-      _posx = posx;
-      _posy = posy;
-      _length = length;
-      
-      _data = NULL;
-      
-      _init();
+    _lcd = lcd;
+    _posx = posx;
+    _posy = posy;
+    _length = length;
+
+    _data = (float*)malloc(sizeof(float) * _length);
+    for (int i=0 ; i<_length ; i++) {
+        _data[i] = 0;
+    }
+
+    _init();
 }
 
 /**
  * Destroy the histogram and all the data added to it
  */
 LcdHistogram::~LcdHistogram() {
-    
+    free(_data);
 }
 
 /**
@@ -142,24 +144,44 @@ void LcdHistogram::_init() {
  * @param number
  */
 void LcdHistogram::push(float number) {
-    
+    // TODO: use a "current number index" to get rid of this loop
+
+    // Shift all the previous numbers
+    for (int i=0 ; i<_length-1 ; i++) {
+        _data[i] = _data[i+1];
+    }
+    // Add the new one at the end
+    _data[_length-1] = number;
 }
 
 /**
  * Print the histogram to the screen
  */
 void LcdHistogram::plot() {
+    float min = _data[0];
+    float max = _data[0];
+    int bar;
+
+    // First loop to get the min and the max values
+    for (int i=0 ; i<_length ; i++) {
+        if (_data[i] < min) {
+            min = _data[i];
+        }
+        else if (_data[i] > max) {
+            max = _data[i];
+        }
+    }
+
     _lcd->setCursor(_posx, _posy);
-  
-    // Just for testing
-    _lcd->print(" ");
-    _lcd->write(1);
-    _lcd->write(2);
-    _lcd->write(3);
-    _lcd->write(4);
-    _lcd->write(5);
-    _lcd->write(6);
-    _lcd->write(7);
-    _lcd->write(8);
+    // Second loop to print them on the screen
+    for (int i=0 ; i<_length ; i++) {
+        // Determinates the perfect bar (0 to 8) to match the number
+        bar = round(((_data[i] - min) / (max - min)) * 8);
+
+        if (bar == 0)
+            _lcd->print(" ");
+        else
+            _lcd->write(bar);
+    }
 }
 
