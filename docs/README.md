@@ -41,8 +41,8 @@ Parameter:
 
 Defines the drawing behavior
 For example, for the numbers {80, 95, 100, 70, 90}, it will print :
-* ABSOLUTE : ▆██▆▇
-* DYNAMIC  : ▃▇█ ▅
+* `ABSOLUTE : ▆██▆▇`
+* `DYNAMIC  : ▃▇█ ▅`
 
 ---
 ```c++
