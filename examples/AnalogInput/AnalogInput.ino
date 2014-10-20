@@ -25,6 +25,9 @@ LcdHistogram lhg(&lcd, 0, 0, screenWidth);
 
 void setup() {
     lcd.begin(screenWidth, screenHeight);
+
+    lhg.setMode(FIXED);     // Fixed mode
+    lhg.setBounds(0, 1023); // set the drawing limits to the min and max analog values.
 }
 
 void loop() {

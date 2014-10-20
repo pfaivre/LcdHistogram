@@ -13,10 +13,16 @@
 /**
  * Defines the drawing behavior
  * For example, for the numbers {80, 95, 100, 70, 90}, it will print :
+ * - FIXED    :  ▅█    (with setBounds(90, 100);)
  * - ABSOLUTE : ▆██▆▇
  * - DYNAMIC  : ▃▇█ ▅
  */
 enum GraphMode {
+    /**
+     * Allow you to manually set the min and max values
+     */
+    FIXED,
+
     /**
      * Draw each bar considering 0 as minimum value
      */
@@ -35,7 +41,9 @@ class LcdHistogram {
         
         void push(float number);
         void plot();
+
         void setMode(GraphMode m);
+        void setBounds(float min, float max);
         
     private:
         LiquidCrystal* _lcd; // LCD to print the graph
@@ -43,7 +51,10 @@ class LcdHistogram {
         int _posy; // Line on the screen of the first bar
         int _length; // Length of the histogram in characters
         float* _data; // Numbers to plot
-        GraphMode _mode;
+
+        GraphMode _mode; // Current mode of drawing (default : DYNAMIC)
+        float _min; // Custom minimum value in fixed mode (default : 0)
+        float _max; // Custom maximum value in fixed mode (default : 100)
         
         void _init();
 };

@@ -30,6 +30,15 @@ Print the graph.
 
 ---
 ```c++
+void setBounds(float min, float max);
+```
+Set the minimum and maximum values in FIXED drawing mode..  
+Parameters:
+* `min` - Each number below this value will be printed with an empty bar
+* `max` - Each number above this value will be printed with a full bar
+
+---
+```c++
 void setMode(GraphMode m);
 ```
 Change the way the graph is being printed.  
@@ -41,8 +50,17 @@ Parameter:
 
 Defines the drawing behavior
 For example, for the numbers {80, 95, 100, 70, 90}, it will print :
-* `ABSOLUTE : ▆██▆▇`
-* `DYNAMIC  : ▃▇█ ▅`
+```
+FIXED    :  ▅█    (with setBounds(90, 100);)
+ABSOLUTE : ▆██▆▇
+DYNAMIC  : ▃▇█ ▅
+```
+
+---
+```c++
+FIXED
+```
+Allow you to manually set the min and max values
 
 ---
 ```c++

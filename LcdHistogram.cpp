@@ -21,6 +21,8 @@ LcdHistogram::LcdHistogram(LiquidCrystal* lcd, int posx, int posy, int length) {
     _posy = posy;
     _length = length;
     _mode = DYNAMIC;
+    _min = 0;
+    _max = 100;
 
     _data = (float*)malloc(sizeof(float) * _length);
     for (int i=0 ; i<_length ; i++) {
@@ -163,21 +165,28 @@ void LcdHistogram::plot() {
     float max = _data[0];
     int bar;
 
-    // First loop to get the min and the max values
-    for (int i=0 ; i<_length ; i++) {
-        if (_data[i] < min) {
-            min = _data[i];
-        }
-        else if (_data[i] > max) {
-            max = _data[i];
-        }
+    if (_mode == FIXED) {
+        min = _min;
+        max = _max;
     }
+    else {
+        // First loop to get the min and the max values
+        for (int i=0 ; i<_length ; i++) {
+            if (_data[i] < min) {
+                min = _data[i];
+            }
+            else if (_data[i] > max) {
+                max = _data[i];
+            }
+        }
 
-    if (_mode == ABSOLUTE) {
-        min = 0;
+        if (_mode == ABSOLUTE) {
+            min = 0;
+        }
     }
 
     _lcd->setCursor(_posx, _posy);
+
     // Second loop to print them on the screen
     for (int i=0 ; i<_length ; i++) {
         // Determinates the perfect bar (0 to 8) to match the number
@@ -196,5 +205,19 @@ void LcdHistogram::plot() {
  */
 void LcdHistogram::setMode(GraphMode m) {
     _mode = m;
+}
+
+/**
+ * Set the minimum and maximum values in FIXED drawing mode.
+ */
+void LcdHistogram::setBounds(float min, float max) {
+    if (min > max) {
+        float tmp = min;
+        min = max;
+        max= tmp;
+    }
+
+    _min = min;
+    _max = max;
 }
 
