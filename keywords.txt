@@ -1,5 +1,5 @@
 #######################################
-# Syntax Coloring Map For LiquidCrystal
+# Syntax Coloring Map For LcdHistogram
 #######################################
 
 
@@ -15,6 +15,7 @@ LcdHistogram KEYWORD1
 
 push KEYWORD2
 plot KEYWORD2
+setBounds KEYWORD2
 setMode KEYWORD2
 
 #######################################
