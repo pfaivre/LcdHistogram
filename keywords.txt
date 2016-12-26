@@ -8,6 +8,7 @@
 #######################################
 
 LcdHistogram KEYWORD1
+GraphMode KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
